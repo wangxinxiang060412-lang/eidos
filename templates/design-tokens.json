@@ -1,0 +1,191 @@
+{
+  "$schema": "https://tr.designtokens.org/format/2025.10/",
+  "$description": "Production-ready 3-tier Design Tokens starter (W3C DTCG 2025.10). Archetype default: Swiss Precision Light & Dark. Replace accent & neutral tint to match your chosen archetype or brand.",
+  "primitive": {
+    "color": {
+      "$type": "color",
+      "neutral": {
+        "0": { "$value": "#FFFFFF" },
+        "50": { "$value": "#F8F9FA" },
+        "100": { "$value": "#F1F3F5" },
+        "200": { "$value": "#E4E7EC" },
+        "300": { "$value": "#CFD5DF" },
+        "400": { "$value": "#98A2B3" },
+        "500": { "$value": "#667085" },
+        "600": { "$value": "#475467" },
+        "700": { "$value": "#2B313E" },
+        "800": { "$value": "#1C2029" },
+        "850": { "$value": "#14171D" },
+        "900": { "$value": "#0D0F12" }
+      },
+      "accent": {
+        "50": { "$value": "#EFF6FF" },
+        "100": { "$value": "#DBEAFE" },
+        "400": { "$value": "#60A5FA" },
+        "500": { "$value": "#3B82F6" },
+        "600": { "$value": "#2563EB" },
+        "700": { "$value": "#1D4ED8" },
+        "950": { "$value": "#172554" }
+      },
+      "green": {
+        "50": { "$value": "#ECFDF3" },
+        "500": { "$value": "#16A34A" },
+        "600": { "$value": "#15803D" },
+        "400": { "$value": "#4ADE80" },
+        "950": { "$value": "#052E16" }
+      },
+      "amber": {
+        "50": { "$value": "#FFFBEB" },
+        "500": { "$value": "#D97706" },
+        "600": { "$value": "#B45309" },
+        "400": { "$value": "#FBBF24" },
+        "950": { "$value": "#451A03" }
+      },
+      "red": {
+        "50": { "$value": "#FEF2F2" },
+        "500": { "$value": "#EF4444" },
+        "600": { "$value": "#DC2626" },
+        "400": { "$value": "#F87171" },
+        "950": { "$value": "#450A0A" }
+      }
+    }
+  },
+  "semantic": {
+    "light": {
+      "$type": "color",
+      "bg": {
+        "canvas": { "$value": "{primitive.color.neutral.50}", "$description": "Main app background behind surfaces" },
+        "surface": { "$value": "{primitive.color.neutral.0}", "$description": "Primary cards, lists, panels" },
+        "surfaceRaised": { "$value": "{primitive.color.neutral.0}", "$description": "Elevated popovers and modals (paired with shadow.overlay)" },
+        "subtle": { "$value": "{primitive.color.neutral.100}", "$description": "Hover fills, subtle chips, inset wells" }
+      },
+      "text": {
+        "primary": { "$value": "{primitive.color.neutral.900}", "$description": "Headings & body (>= 15:1 on white)" },
+        "secondary": { "$value": "{primitive.color.neutral.600}", "$description": "Supporting copy & labels (>= 7:1 on white)" },
+        "tertiary": { "$value": "{primitive.color.neutral.500}", "$description": "Metadata & captions (>= 4.8:1 on white)" },
+        "disabled": { "$value": "{primitive.color.neutral.400}", "$description": "Disabled control text" },
+        "onAccent": { "$value": "{primitive.color.neutral.0}", "$description": "Text on primary solid CTA" }
+      },
+      "border": {
+        "subtle": { "$value": "{primitive.color.neutral.200}" },
+        "default": { "$value": "{primitive.color.neutral.300}" },
+        "strong": { "$value": "{primitive.color.neutral.400}" },
+        "focus": { "$value": "{primitive.color.accent.600}" }
+      },
+      "accent": {
+        "primary": { "$value": "{primitive.color.accent.600}", "$description": "Solid CTA fill (5.17:1 with white text)" },
+        "primaryHover": { "$value": "{primitive.color.accent.700}" },
+        "text": { "$value": "{primitive.color.accent.600}", "$description": "Links and inline accent labels on light surfaces" },
+        "subtle": { "$value": "{primitive.color.accent.50}" }
+      },
+      "status": {
+        "success": { "$value": "{primitive.color.green.600}" },
+        "successBg": { "$value": "{primitive.color.green.50}" },
+        "warning": { "$value": "{primitive.color.amber.600}" },
+        "warningBg": { "$value": "{primitive.color.amber.50}" },
+        "destructive": { "$value": "{primitive.color.red.600}" },
+        "destructiveBg": { "$value": "{primitive.color.red.50}" }
+      }
+    },
+    "dark": {
+      "$type": "color",
+      "bg": {
+        "canvas": { "$value": "{primitive.color.neutral.900}", "$description": "Deepest dark mode canvas" },
+        "surface": { "$value": "{primitive.color.neutral.850}", "$description": "Base content surface (+1 luminance step)" },
+        "surfaceRaised": { "$value": "{primitive.color.neutral.800}", "$description": "Popovers, dialogs, elevated panels (+2 luminance step)" },
+        "subtle": { "$value": "{primitive.color.neutral.700}", "$description": "Hover and selected row fills" }
+      },
+      "text": {
+        "primary": { "$value": "#F3F5F8", "$description": "High-contrast off-white to prevent halation (>= 14:1 on raised)" },
+        "secondary": { "$value": "#A4ACB9", "$description": "Secondary body and metadata (>= 7:1 on raised)" },
+        "tertiary": { "$value": "#858E9E", "$description": "Captions and muted labels (>= 5.0:1 on raised)" },
+        "disabled": { "$value": "#525A69" },
+        "onAccent": { "$value": "{primitive.color.neutral.0}" }
+      },
+      "border": {
+        "subtle": { "$value": "rgba(255, 255, 255, 0.08)" },
+        "default": { "$value": "rgba(255, 255, 255, 0.14)" },
+        "strong": { "$value": "rgba(255, 255, 255, 0.24)" },
+        "focus": { "$value": "{primitive.color.accent.400}" }
+      },
+      "accent": {
+        "primary": { "$value": "{primitive.color.accent.600}", "$description": "Solid CTA fill in dark mode (5.17:1 with white text)" },
+        "primaryHover": { "$value": "{primitive.color.accent.700}" },
+        "text": { "$value": "{primitive.color.accent.400}", "$description": "Links, active icons, and inline highlights on dark surfaces (>= 6.4:1 on raised)" },
+        "subtle": { "$value": "{primitive.color.accent.950}" }
+      },
+      "status": {
+        "success": { "$value": "{primitive.color.green.400}" },
+        "successBg": { "$value": "{primitive.color.green.950}" },
+        "warning": { "$value": "{primitive.color.amber.400}" },
+        "warningBg": { "$value": "{primitive.color.amber.950}" },
+        "destructive": { "$value": "{primitive.color.red.400}" },
+        "destructiveBg": { "$value": "{primitive.color.red.950}" }
+      }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": ["-apple-system", "BlinkMacSystemFont", "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", "Roboto", "Noto Sans SC", "sans-serif"]
+      },
+      "mono": {
+        "$value": ["ui-monospace", "SF Mono", "JetBrains Mono", "Menlo", "Consolas", "monospace"]
+      }
+    },
+    "fontSize": {
+      "$type": "dimension",
+      "caption": { "$value": "12px" },
+      "bodySm": { "$value": "13px" },
+      "body": { "$value": "15px" },
+      "titleSm": { "$value": "16px" },
+      "titleMd": { "$value": "18px" },
+      "titleLg": { "$value": "22px" },
+      "display": { "$value": "32px" }
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "1": { "$value": "4px" },
+    "2": { "$value": "8px" },
+    "3": { "$value": "12px" },
+    "4": { "$value": "16px" },
+    "5": { "$value": "20px" },
+    "6": { "$value": "24px" },
+    "8": { "$value": "32px" },
+    "12": { "$value": "48px" }
+  },
+  "radius": {
+    "$type": "dimension",
+    "xs": { "$value": "4px" },
+    "sm": { "$value": "6px" },
+    "md": { "$value": "10px" },
+    "lg": { "$value": "14px" },
+    "xl": { "$value": "18px" },
+    "full": { "$value": "9999px" }
+  },
+  "elevation": {
+    "$type": "string",
+    "lightCard": { "$value": "0 0 0 1px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.05), 0 6px 16px -4px rgba(15,23,42,0.06)" },
+    "lightOverlay": { "$value": "0 0 0 1px rgba(15,23,42,0.08), 0 8px 24px -6px rgba(15,23,42,0.12), 0 20px 48px -12px rgba(15,23,42,0.10)" },
+    "darkTopHighlight": { "$value": "inset 0 1px 0 rgba(255,255,255,0.06), 0 0 0 1px rgba(255,255,255,0.08)" }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "instant": { "$value": "100ms" },
+      "effectFast": { "$value": "160ms" },
+      "effectDefault": { "$value": "220ms" },
+      "spatialFast": { "$value": "200ms" },
+      "spatialDefault": { "$value": "300ms" },
+      "spatialExit": { "$value": "180ms" }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "effect": { "$value": [0.2, 0, 0, 1] },
+      "spatialEnter": { "$value": [0.22, 1, 0.36, 1] },
+      "spatialExit": { "$value": [0.4, 0, 1, 1] }
+    }
+  }
+}
