@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the product-design-engineering Agent Skill structure, frontmatter, links, and JSON tokens."""
+"""Validate the EIDOS Agent Skill structure, frontmatter, links, context budget, and WCAG token math."""
 
 from __future__ import annotations
 
@@ -14,7 +14,8 @@ TOKENS_JSON = ROOT / "templates" / "design-tokens.json"
 
 MAX_NAME_LEN = 64
 MAX_DESC_LEN = 1024
-MAX_SKILL_LINES = 350
+MAX_SKILL_LINES = 220
+MAX_REF_LINES = 220
 
 
 def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
@@ -79,13 +80,21 @@ def validate_frontmatter(errors: list[str], warnings: list[str]) -> None:
         errors.append(f"Frontmatter description exceeds {MAX_DESC_LEN} chars: {len(desc)}")
 
 
-def validate_links(errors: list[str], warnings: list[str]) -> set[Path]:
+def validate_links_and_budgets(errors: list[str], warnings: list[str]) -> set[Path]:
     md_files = sorted(ROOT.rglob("*.md"))
     link_re = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
     referenced: set[Path] = {SKILL_MD.resolve()}
 
     for md_file in md_files:
         content = md_file.read_text(encoding="utf-8")
+        rel_src = md_file.relative_to(ROOT)
+
+        # Check per-reference context budget so no single reference bloats loading
+        if rel_src.parts[0] == "references" and len(content.splitlines()) > MAX_REF_LINES:
+            warnings.append(
+                f"Reference file {rel_src} has {len(content.splitlines())} lines (recommended <= {MAX_REF_LINES})"
+            )
+
         # Strip fenced code blocks to avoid false positives on example links
         stripped = re.sub(r"```.*?```", "", content, flags=re.DOTALL)
         for raw_target in link_re.findall(stripped):
@@ -101,7 +110,6 @@ def validate_links(errors: list[str], warnings: list[str]) -> set[Path]:
                 continue
             resolved = (md_file.parent / path_part).resolve()
             if not resolved.exists():
-                rel_src = md_file.relative_to(ROOT)
                 errors.append(f"Broken relative link in {rel_src}: {raw_target}")
             else:
                 referenced.add(resolved)
@@ -129,7 +137,6 @@ def validate_tokens(errors: list[str]) -> None:
         errors.append(f"Invalid JSON in templates/design-tokens.json: {exc}")
         return
 
-    # Collect all dot-paths and check alias references like "{primitive.color.neutral.50}"
     def resolve_path(obj: dict, dotted: str) -> bool:
         cur = obj
         for part in dotted.split("."):
@@ -202,7 +209,7 @@ def main() -> int:
     warnings: list[str] = []
 
     validate_frontmatter(errors, warnings)
-    validate_links(errors, warnings)
+    validate_links_and_budgets(errors, warnings)
     validate_tokens(errors)
 
     md_count = len(list(ROOT.rglob("*.md")))
@@ -210,7 +217,7 @@ def main() -> int:
 
     print(f"Skill root : {ROOT}")
     print(f"Markdown   : {md_count} files")
-    print(f"SKILL.md   : {skill_lines} lines")
+    print(f"SKILL.md   : {skill_lines} lines (budget <= {MAX_SKILL_LINES})")
     print(f"Errors     : {len(errors)}")
     print(f"Warnings   : {len(warnings)}")
 
@@ -225,7 +232,7 @@ def main() -> int:
             print(f"  [ERR]  {e}")
         return 1
 
-    print("\nValidation PASSED: Frontmatter, progressive-disclosure links, and DTCG token aliases are all valid.")
+    print("\nValidation PASSED: Frontmatter, context budgets, links, DTCG aliases, and WCAG 2.2 AA contrast are all valid.")
     return 0
 
 

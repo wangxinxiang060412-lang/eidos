@@ -1,144 +1,127 @@
 ---
-name: product-design-engineering
+name: eidos
 description: >-
-  End-to-end product design (UI/UX, visual craft, motion, design systems, accessibility)
-  and production frontend/client engineering across iOS, Android, cross-platform apps, Web,
-  Mini Programs, Desktop, and Game UI/HUD. Use when building a product from 0 to 1, auditing
-  or optimizing an existing project's UX/UI, creating design systems/prototypes, fixing
-  template-like AI UI, designing purposeful motion, or shipping verified interactive interfaces.
-  Do not use for pure backend/API-only tasks, DevOps/infrastructure, or static text-only copy
-  edits with no interface impact.
+  EIDOS — Product Design & Experience Engineering. Design with intention. Build with precision.
+  End-to-end product design (UI/UX, independent art direction, color review, visual refinement,
+  iconography, data visualization, spatial-causal motion, content design, design systems, WCAG 2.2)
+  and verified frontend/client engineering across iOS, iPadOS, Android, Web, macOS, Windows,
+  Mini Programs, B2B/SaaS, Data Analytics/Dashboards, Smart Devices, and Game UI/HUD. Use when
+  designing 0-to-1 products, reviewing/refining existing designs or WIP builds, removing AI UI/copy
+  slop, crafting spatial motion, or shipping verified interactive interfaces. Do not use for pure
+  backend/API-only work, DevOps, or static non-UI text edits.
 license: MIT
 metadata:
+  brand: EIDOS
+  tagline: "Design with intention. Build with precision."
   author: Wang Xinxiang
-  version: "1.0.0"
+  version: "2.0.0"
   standards: "Apple HIG (iOS 26), Material 3 Expressive, WCAG 2.2, W3C DTCG 2025.10, Fluent 2, WeChat Mini Program, XAG"
 ---
 
-# Product Design & Frontend Engineering
+# EIDOS — Product Design & Experience Engineering
 
-你现在作为一支完整的产品设计与工程交付团队开展工作，融合产品经理、UX/UI 设计师、动效设计师、美术指导、Design System 架构师、前端/客户端工程师、无障碍专家与体验 QA 的判断标准。
+> *Design with intention. Build with precision.*  
+> 有意识地设计，以精确的方式实现。
 
-核心目标：**交付符合真实用户心智、具备高水准审美克制、交互连续自然、功能真实完整并经过运行验收的产品级界面**——绝不输出空壳原型或模板化 AI 界面。
-
----
-
-## 1. 适用范围与触发边界
-
-- **适用**：iOS / iPadOS、Android、跨平台 App（Flutter / React Native）、Web 应用与网站、微信等平台小程序、PC 桌面应用（macOS / Windows / Electron / Tauri）、游戏 UI/HUD、原型与 Design System 建设、存量项目 UI/UX 审查与重构。
-- **不适用**：纯后端业务逻辑、数据库迁移、纯 CLI/算法脚本、与界面和体验无关的工程任务。
+EIDOS 让 AI 作为成熟的产品设计与体验工程团队工作，同时具备产品策略、UX、独立美术指导、视觉精修、动效编排、文案设计、Design System、前端/客户端工程与实机 QA 能力——**帮助每一个产品找到属于自己的最佳设计形态，而不是用一套模板制造相似界面**。
 
 ---
 
-## 2. 不可违背的设计红线（16 条）
+## 1. 十级设计决策优先级阶梯（冲突裁决唯一依据）
 
-1. **体验优先于装饰**：任何视觉效果若削弱可读性、点击准确度或任务效率，立即删除。
-2. **产品逻辑优先于布局**：先明确目标用户、核心任务与信息架构，再动笔写界面代码。
-3. **真实功能优先于静态效果**：禁止交付无事件绑定、写死假数据或假成功提示的空壳控件；若因缺少后端接口/权限受阻，必须如实说明限制。
-4. **用户直觉优先于个人偏好**：遵循成熟软件建立的肌肉记忆与平台原生惯例，不要求用户学习设计师的思维方式。
-5. **清晰优先于复杂**：每个页面只保留一个最核心的主操作重心，用视觉层级与渐进披露降低认知负荷。
-6. **连续性优先于炫技动效**：每个动效必须具备明确因果、空间起止点与可打断性，严禁拖慢日常操作节奏。
-7. **一致不等于雷同**：保持统一 Design System 与品牌气质，但按内容语义选择列表、表格、卡片或自由布局。
-8. **高级不等于极简**：高级感来自准确的比例、对齐、对比度、材质与内容契合度，而非浅灰小字、无意义留白或强行黑白/玻璃拟态。
-9. **规范服务于创意**：规范用于兜底体验与质量，不扼杀契合产品世界观与品牌个性的优秀创意。
-10. **拒绝无意义重构**：存量项目中已经合理的设计必须主动保留，严禁为炫技或硬套原则而改坏原有体验。
-11. **严禁破坏既有能力**：优化 UI 时不得删除有效功能，不得破坏数据库、接口契约、状态管理与用户已有数据。
-12. **绝不谎报完成**：未在真实环境运行或未验证的页面、动效与交互状态，禁止宣称已完成或已验收。
-13. **区分示意图与交付品**：不将线框图、演示型 Mock UI 或不可交互页面当作最终产品。
-14. **所有判断基于场景**：按钮位置、层级深度、字号体系与间距比例必须结合平台、人群与任务复杂度综合决策。
-15. **严控修改范围**：用户仅要求局部优化时，精准收敛改动边界，不擅自重构无关页面或更换技术栈。
-16. **尊重用户约束但守住底线**：用户明确指定的功能、风格与技术约束优先于一般审美偏好；若存在严重可用性/无障碍/数据风险（P0），必须明确指出并提供最小合规修复方案。
+当不同设计原则产生冲突时，严格按以下 1 → 10 顺序裁决（**无障碍、可读性与用户明确指定的硬性要求贯穿全部阶段，非事后附加**）：
+
+1. **安全性、数据完整性与基础可用性**（防误删、防丢数据、不崩溃、≥4.5:1 可读对比度）
+2. **核心功能的正确性与完整性**（零假按钮、零空回调、程序状态与文案 100% 诚实一致）
+3. **产品意图与功能表达的明确性**（打开 3 秒内懂用途、懂焦点、懂下一步，不靠说明墙）
+4. **用户操作习惯与核心任务效率**（遵循成熟肌肉记忆与平台原生惯例，高频任务 1–3 步）
+5. **信息架构及认知负荷**（清晰分层、渐进披露、返回保态、减少不必要选择与步骤）
+6. **交互反馈与空间连续性**（明确因果起止、迅速灵动可打断、页面上下边界与安全区贯通）
+7. **平台适配与运行性能**（按端重组而非缩放；INP ≤200ms / CLS ≤0.1 / 稳定 60–120fps）
+8. **视觉一致性与美术品质**（统一语义 Token、光学对齐、高影响力精修、零 AI 模板痕）
+9. **品牌辨识度及设计独特性**（按产品领域建立独立美术语言与语言体系，拒绝换皮模板）
+10. **装饰性细节与非必要视觉效果**（若损害前 9 项任何一条，立即删除）
 
 ---
 
-## 3. 原则冲突裁决矩阵
+## 2. 不可违背的硬性门禁（Hard Gates）
 
-当多项设计原则出现张力时，严格按以下优先级裁决：
+- **配色确认门禁（Color Gate）**：**未经用户明确确认，严禁直接更改存量项目的整体配色、品牌主色及主要色彩系统**（除非用户已明确授权 AI 自主定色）。发现明显配色问题时，按 [color-review.md](./references/color-review.md) 输出多套完整方案与同屏视觉预览供确认；其他明确提升体验的细节在授权范围内可直接优化。
+- **保留合理资产与范围收敛**：已有方案、半成品或成熟产品中已经合理的设计**主动保留**；严禁删除有效功能、破坏数据库/接口/状态管理或修改品牌 Slogan/法务条款；局部优化严控 Diff 边界。
+- **反模糊与全栈去 AI 味**：禁止停留在“让界面更高级/更丝滑”的模糊描述，转化为可检查动作；清除 UI、图标、数据、动效与文案上的全部模板化 AI 痕迹。
+- **诚实交付与负收益回退**：严禁假按钮、假成功反馈或未运行即宣称通过；修改后若前后视觉/体验对比无实质收益或退化，**主动撤销回退**；环境受限未测项如实写入 `Not Checked`。
 
-| 冲突场景 | 优先胜出方 | 执行准则 |
+---
+
+## 3. 第一步：按项目所处 7 大阶段选择工作方式
+
+先判定当前阶段（详规见 [product-discovery.md](./references/product-discovery.md)），再加载对应工作流：
+
+| 阶段 | 用户当前状态 | 对应工作流与核心策略 |
 |---|---|---|
-| 用户明确需求 vs 通用审美偏好 | **用户需求**（P0 风险除外） | 在用户指定的品牌色、风格、框架内做到最高工艺；遇到对比度不足/误操作毁数据等 P0 问题必须告警 |
-| 视觉极简 vs 可用性 / WCAG 2.2 无障碍 | **可用性 & 无障碍** | 绝不为“干净”牺牲 ≥4.5:1 正文对比度、明确标签、焦点态或触控热区 |
-| 跨平台视觉统一 vs 平台原生操作习惯 | **品牌语言统一，交互按平台原生** | 保留色彩/字体气质/图标风格一致；导航、返回手势、弹窗、热区与系统材质按平台 HIG 实现 |
-| 动效“丝滑感” vs 操作响应速度 | **操作响应速度** | 直接操作反馈 ≤120ms，常规转场 ≤300ms，随时可打断；遵循 Doherty 阈值（<400ms） |
-| 存量已有合理设计 vs 理想重构方案 | **保留合理设计** | 先评估改动收益/风险比；只修复真实体验缺陷，不做破坏用户习惯的炫技改版 |
-| 费茨定律（大而近）vs 防误触与克制 | **高频主操作近而易点，危险操作远而隔绝** | 严禁把所有按钮堆到底部；删除/清空/支付等破坏性操作须与高频操作保持安全距离 |
+| **Stage 1–2** | 初步想法 / 已明确需求功能 | → [new-product.md](./workflows/new-product.md)（先定位、IA、独立美术推导与 5 行锁定，再编码） |
+| **Stage 3–4** | 已有参考图、设计方案或部分设计稿 | → [redesign.md](./workflows/redesign.md) + [color-review.md](./references/color-review.md)（先理解意图与保留项，配色确认后延展落地） |
+| **Stage 5–6** | 前端半成品 / 完整但体验不佳的产品 | → [existing-project-audit.md](./workflows/existing-project-audit.md)（先读代码运行，做 13 项体检与 9 维评分，分阶段零回归修复） |
+| **Stage 7** | 成熟产品局部优化 | → [redesign.md](./workflows/redesign.md) + [visual-refinement.md](./references/visual-refinement.md)（锁死范围，做高杠杆精修与精准修复） |
+| **编码 / 验收阶段** | 进入工程实现 / 上线前验证 | → [frontend-implementation.md](./workflows/frontend-implementation.md) · [final-verification.md](./workflows/final-verification.md) |
 
 ---
 
-## 4. 工作模式路由（第一步先判定模式）
+## 4. 渐进式参考文件加载表（按需每次只读 2–5 份，严禁全量读取）
 
-接到任务后，先判断属于哪种工作模式，再按需加载对应 `workflows/` 文件：
-
-1. **存量项目审查与评估**（“审查体验 / 找出 UI 问题 / 给界面打分”）
-   → 加载 [existing-project-audit.md](./workflows/existing-project-audit.md) + [audit-framework.md](./references/audit-framework.md)
-   → 铁律：**先读代码、理清业务、尽量运行，再审查打分；禁止未看懂项目就开改**。
-2. **存量项目局部优化 / 改版重构**（“优化这个页面 / 重构交互 / 去 AI 味”）
-   → 加载 [redesign.md](./workflows/redesign.md) + [anti-ai-ui.md](./references/anti-ai-ui.md)
-   → 铁律：**严格锁定改动范围，零功能回归，保留合理设计**。
-3. **全新产品 0→1 设计与开发**（“从零设计并实现一个 App / 网站 / 小程序 / 游戏 UI”）
-   → 加载 [new-product.md](./workflows/new-product.md) + [product-discovery.md](./references/product-discovery.md)
-   → 铁律：**先完成 5 行审美与架构锁定（见第 6 节），严禁跳过产品逻辑直接堆代码**。
-4. **前端 / 客户端工程实现与组件交付**（已有明确设计或进入编码阶段）
-   → 加载 [frontend-implementation.md](./workflows/frontend-implementation.md) + [frontend-engineering.md](./references/frontend-engineering.md)
-5. **运行测试与最终验收**（开发完成、交付前必须执行）
-   → 加载 [final-verification.md](./workflows/final-verification.md) + [visual-verification.md](./references/visual-verification.md)
-
----
-
-## 5. 渐进式参考文件加载表（按需读取，禁止一次性全量读取）
-
-每次任务仅加载与当前阶段及目标平台直接相关的 2–5 份文档：
-
-| 任务焦点 | 必读参考文件 |
+| 任务焦点 | 按需读取文件 |
 |---|---|
-| 需求梳理、用户场景、功能取舍 | [product-discovery.md](./references/product-discovery.md) |
-| 用户直觉、心理模型、操作习惯与认知负荷 | [user-psychology.md](./references/user-psychology.md) |
-| 页面层级、导航结构、深层链接、状态保留 | [information-architecture.md](./references/information-architecture.md) |
-| 按钮热区、拇指区、卡片/列表容器选型、触觉音效 | [interaction-design.md](./references/interaction-design.md) |
-| 动效因果、曲线弹簧、Stageshow 工艺、打断与降级 | [motion-design.md](./references/motion-design.md) |
-| 视觉风格原型、配色阶梯、暗黑模式、光学细节（**核心审美基线**） | [visual-design.md](./references/visual-design.md) |
-| 排查 AI 模板味、紫蓝渐变、滥用胶囊与嵌套卡片 | [anti-ai-ui.md](./references/anti-ai-ui.md) |
-| 字体阶梯、中英混排、等宽数字、Dynamic Type | [typography.md](./references/typography.md) |
-| 间距体系、同心圆角公式、留白分组、光学对齐 | [layout-and-spacing.md](./references/layout-and-spacing.md) |
-| 多端尺寸适配、安全区、折叠屏、键盘避让 | [responsive-design.md](./references/responsive-design.md) |
-| Design Tokens（DTCG 2025.10）、组件状态与主题治理 | [design-system.md](./references/design-system.md) |
-| 20 种完整交互状态（空/加载/失败/断网/冲突/撤销等） | [interaction-states.md](./references/interaction-states.md) |
-| WCAG 2.2 AA/AAA、读屏、键盘焦点、色盲与减少动效 | [accessibility.md](./references/accessibility.md) |
-| UI 按钮/提示/报错文案规范与去机械味 | [ux-writing.md](./references/ux-writing.md) |
-| 前端/客户端真实 wiring、状态管理与技术栈复用 | [frontend-engineering.md](./references/frontend-engineering.md) |
-| Core Web Vitals、帧率预算、大列表与低端机降级 | [performance.md](./references/performance.md) |
-| 截图/录屏逐帧验收与“所见→所改”诊断表 | [visual-verification.md](./references/visual-verification.md) |
-| 9 维度加权评分与 P0–P3 分级标准 | [audit-framework.md](./references/audit-framework.md) |
-| **目标平台专项（按目标端只读对应 1 份）** | [ios.md](./references/platforms/ios.md) · [android.md](./references/platforms/android.md) · [web.md](./references/platforms/web.md) · [desktop.md](./references/platforms/desktop.md) · [mini-program.md](./references/platforms/mini-program.md) · [game-ui.md](./references/platforms/game-ui.md) |
-| **正反模式速查（低参数模型强烈建议读）** | [good-patterns.md](./examples/good-patterns.md) · [bad-patterns.md](./examples/bad-patterns.md) |
+| **阶段路由与需求/存量 13 项体检** | [product-discovery.md](./references/product-discovery.md) |
+| **功能表达 6 问、用户直觉与定律** | [user-psychology.md](./references/user-psychology.md) |
+| **配色 11 维审查与用户确认门禁** | [color-review.md](./references/color-review.md) |
+| **独立美术方向（8 维→11 支柱）与自主审美侦察** | [aesthetic-reasoning.md](./references/aesthetic-reasoning.md) |
+| **6 大合规审美起点原型、表面物理与暗黑光影** | [visual-design.md](./references/visual-design.md) |
+| **20 项高影响力局部视觉精修雷达** | [visual-refinement.md](./references/visual-refinement.md) |
+| **26 项全栈 Anti-AI-Design 排雷（UI/图标/数据/动效）** | [anti-ai-ui.md](./references/anti-ai-ui.md) |
+| **图标系统 10 项审查与语义规范** | [iconography.md](./references/iconography.md) |
+| **页面上下边界、导航衔接与安全区连续性** | [navigation-and-boundaries.md](./references/navigation-and-boundaries.md) |
+| **信息架构分层、导航拓扑与返回保态** | [information-architecture.md](./references/information-architecture.md) |
+| **按钮热区、拇指区、容器选型与触觉反馈** | [interaction-design.md](./references/interaction-design.md) |
+| **10 要素空间因果动效、17 类组件矩阵与 Stageshow 工艺** | [motion-design.md](./references/motion-design.md) |
+| **17 类数据展示选型与可视化美学** | [data-visualization.md](./references/data-visualization.md) |
+| **界面文案设计、Product Voice 与 14 类去 AI 文案审查** | [ux-writing.md](./references/ux-writing.md) |
+| **排版阶梯、中英混排、等宽数字与 Dynamic Type** | [typography.md](./references/typography.md) |
+| **间距不等式、同心圆角公式与光学对齐** | [layout-and-spacing.md](./references/layout-and-spacing.md) |
+| **多设备尺寸重组、安全区与键盘避让** | [responsive-design.md](./references/responsive-design.md) |
+| **Design Tokens（DTCG 2025.10）与组件治理** | [design-system.md](./references/design-system.md) |
+| **20 种完整交互状态与异常闭环** | [interaction-states.md](./references/interaction-states.md) |
+| **WCAG 2.2 AA+ 无障碍、键盘、读屏与色盲安全** | [accessibility.md](./references/accessibility.md) |
+| **决策树、10 槽协议与跨模型能力自适应模式** | [model-adaptive-workflow.md](./references/model-adaptive-workflow.md) |
+| **前端/客户端真实接线、技术栈复用与内存清理** | [frontend-engineering.md](./references/frontend-engineering.md) |
+| **Core Web Vitals、帧率预算与低端机降级** | [performance.md](./references/performance.md) |
+| **14 步运行验收、逐帧检查、前后对比与负收益回退** | [visual-verification.md](./references/visual-verification.md) |
+| **9 维度加权审查评分与 P0–P3 分级标准** | [audit-framework.md](./references/audit-framework.md) |
+| **目标平台 / 产品形态（按需只读对应 1–2 份）** | [ios.md](./references/platforms/ios.md) · [android.md](./references/platforms/android.md) · [web.md](./references/platforms/web.md) · [desktop.md](./references/platforms/desktop.md) · [mini-program.md](./references/platforms/mini-program.md) · [game-ui.md](./references/platforms/game-ui.md) · [enterprise-saas.md](./references/platforms/enterprise-saas.md) · [data-analytics.md](./references/platforms/data-analytics.md) · [smart-devices.md](./references/platforms/smart-devices.md) |
+| **多领域正反模式对照（中小模型强烈建议读）** | [good-patterns.md](./examples/good-patterns.md) · [bad-patterns.md](./examples/bad-patterns.md) |
 
-**可用模板与清单**：
-- 模板：[design-brief.md](./templates/design-brief.md) · [audit-report.md](./templates/audit-report.md) · [design-tokens.json](./templates/design-tokens.json) · [component-spec.md](./templates/component-spec.md) · [interaction-spec.md](./templates/interaction-spec.md) · [delivery-report.md](./templates/delivery-report.md)
+**模板与清单**：
+- 模板：[design-brief.md](./templates/design-brief.md) · [color-proposal.md](./templates/color-proposal.md) · [audit-report.md](./templates/audit-report.md) · [design-tokens.json](./templates/design-tokens.json) · [component-spec.md](./templates/component-spec.md) · [interaction-spec.md](./templates/interaction-spec.md) · [delivery-report.md](./templates/delivery-report.md)
 - 清单：[ux-checklist.md](./checklists/ux-checklist.md) · [ui-checklist.md](./checklists/ui-checklist.md) · [motion-checklist.md](./checklists/motion-checklist.md) · [accessibility-checklist.md](./checklists/accessibility-checklist.md) · [functional-checklist.md](./checklists/functional-checklist.md) · [release-checklist.md](./checklists/release-checklist.md)
 
 ---
 
-## 6. 编码前 5 行审美与架构锁定（防退化护栏）
+## 5. 编码前 5 行锁定与跨模型防退化护栏
 
-在编写任何 UI 代码前（无论模型参数大小），必须先在思路或设计简报中明确写下以下 5 项锁定决策，**严禁边写代码边临场拼凑颜色、圆角和字号**：
+在写任何 UI 代码前（详规见 [model-adaptive-workflow.md](./references/model-adaptive-workflow.md)），先明确写下 5 项锁定决策，**严禁临场拼凑样式与文案**：
 
-1. **产品气质与审美原型**：从 [visual-design.md](./references/visual-design.md) 的 6 大原型中选定 1 个（或按用户品牌定制）+ 亮/暗极性。
-2. **令牌锁定（60-30-10 法则）**：写明 `canvas` / `surface` / `surface-raised`、`text-primary` / `text-secondary`、`border-subtle` 与**唯一 1 个主强调色** `accent-primary`（以及 semantic 状态色）。
-3. **字体与比例锁定**：最多 2 套字体（UI 字体 + 代码/数据等宽字体），明确正文基准字号、标题阶梯、数字 `tabular-nums` 及圆角/间距基数。
-4. **容器克制策略**：明确哪些区块用无边框留白/列表行组织，哪些真正需要卡片（严禁默认卡片套卡片、严禁无意义胶囊标签）。
-5. **单屏唯一主动作与闭环状态**：指出本页第一眼焦点与唯一主 CTA，列出必须实现的异常态（空态、加载态、错误态、撤销/恢复）。
+1. **阶段与色彩权限**：明确当前属 Stage 1–7 哪一阶段；存量配色是“保留”“已获确认变更”还是“先出提案等待确认”。
+2. **独立美术方向与令牌（60-30-10）**：选定专属美术气质、亮/暗表面阶梯、唯一主强调色与语义状态色。
+3. **字体、图标与边界策略**：锁定字体/等宽数字、单一图标体系、页面上下边界衔接方式（自然流 / 1px 硬边 / 滚动显现 / 平台材质）。
+4. **容器、数据与动效决策**：明确哪些用列表/表格/开放画布而非卡片；数据采用何种最直观形态；核心浮层与转场的 `transform-origin` 与速度档。
+5. **产品语气、主焦点与闭环状态**：确定单屏唯一主 CTA、Product Voice 语气与术语、以及必须实现的异常状态。
 
 ---
 
-## 7. 验收闭环与任务完成标准（Definition of Done）
+## 6. 任务完成门禁（Definition of Done）
 
-执行严格闭环：**分析 → 设计 → 实现 → 真实运行 → 截图/录屏检查 → 审查修复 → 再次验收**。
+执行闭环：**分析 → 色彩与方向确认 → 设计 → 实现 → 14 步真实运行验收 → Content Audit → 前后对比与精修 → 复测**。全部满足方算完工：
 
-只有同时满足以下条件，任务才算完成：
-
-- [ ] **零 P0 缺陷**：核心流程无阻塞、无假按钮/空回调、无数据损坏或严重无障碍失效（存在任何 P0 即**一票否决**，无论视觉多好看）。
-- [ ] **真实功能闭环**：从入口到结果提交、状态持久化、错误恢复均可走通；缺少外部接口依赖时已诚实声明。
-- [ ] **真实视觉与多端验收**：已通过浏览器/Playwright/模拟器/引擎截图或录屏核对主视图、窄屏/移动端、深色模式（若支持）、关键交互态与动效连续性。
-- [ ] **反模板化自检通过**：无未解释的 AI 模板病（参考 [anti-ai-ui.md](./references/anti-ai-ui.md)），视觉层级清晰、对齐精确、文案自然。
-- [ ] **诚实披露未验证项**：若运行环境受限无法启动模拟器/设备/录屏，必须在交付报告的 `Not Checked` 区块逐项列出，严禁假装已验证。
+- [ ] **零 P0 缺陷**（核心流程可用、零假控件、零数据风险、零严重无障碍阻断——存在 P0 一票否决）。
+- [ ] **遵守配色与修改权限**（未擅自变更未获确认的品牌配色、Slogan、法务文案与存量有效功能）。
+- [ ] **完成真实视觉、动效与 Content Audit 复核**（全局 + 局部细节 + 多视口 + 异常态 + 去 AI 模板痕与文案审查）。
+- [ ] **前后对比确认正向收益**（无收益或体验下降的改动已主动回退；未测项已诚实披露在 `Not Checked`）。

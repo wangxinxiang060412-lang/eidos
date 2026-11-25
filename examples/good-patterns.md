@@ -1,13 +1,25 @@
-# Good Patterns: High-Craft Production UI & Interaction Recipes
+# Good Patterns: Multi-Domain High-Craft UI, Motion & Copy Recipes
 
-本文件提供可直接复用的高工艺模式，帮助不同参数规模的模型稳定交付接近资深产品团队水准的视觉、交互与工程细节。
+本文件提供跨产品类型的**高工艺正例与可执行配方**，帮助不同参数规模的模型直观理解“为什么这种设计适合这类产品”以及如何落盘到精确代码。
 
 ---
 
-## 1. 同心圆角与克制柔和卡片（光影 & 暗黑双模式）
+## 一、六类不同产品的独立设计形态（为什么它们不该长得一样）
 
-**要点**：外圆角 = 内圆角 + 内边距；亮色用“极细 1px 描边 + 贴底接触影 + 环境柔影”，暗色用**提亮表面一档 + 顶部 1px 微光**，零脏黑重影。
+| 产品类型 | 优秀设计形态特征 | 为什么适合它 |
+|---|---|---|
+| **1. 摄影 / 影像评片工具** | 极低饱和度暗中性画布（`#161618`），照片近乎满出血居中展示，右侧 `280px` 紧致检查器用 `12px` 等宽数字展示光圈/快门/ISO 与直方图，界面零装饰彩色 | 用户的眼睛必须把 100% 色彩敏感度留给照片本身；任何彩色徽章、厚白边或花哨阴影都会干扰曝光与白平衡判断 |
+| **2. 个人理财 / 金融分析** | 冷静中性亮画布（`#F5F7FA`），顶部“总资产 Hero Stat + 周期涨跌（符号+颜色+基准）”配一条极简 30 日 Sparkline；下方直接进入分组账单明细行，金额右对齐 + `tabular-nums` | 金融用户追求审慎核对与秒级扫视，清晰排版比 4 张同质化圆角 KPI 卡片与花哨圆环图可信十倍 |
+| **3. B 端企业级 / SaaS 后台** | 紧凑 `52px` 顶栏 + 可收起 `220px` 左侧导航 + 硬边界 `1px` 分隔；高密度数据表（行高 `40px`、吸顶表头、批量勾选浮动操作条）；点击单据从右侧滑出详情抽屉（Side Drawer） | 业务人员每天处理数百单，保留列表上下文的右侧抽屉与高信噪比表格比反复整页跳转和虚空大留白效率高数倍 |
+| **4. 消费生活 / 微信小程序** | 微暖米纸底（`#FAF8F5`）+ 唯一温润陶土/鼠尾草主色；顶部动态避让微信右上角胶囊；底部固定栏叠加 `env(safe-area-inset-bottom)` 且列表底部留足防遮挡呼吸空间；标题直给“收藏 / 点单”，零废话副标题 | 贴合日常高频单手使用场景，温润克制又不牺牲点击准度与可读性 |
+| **5. 学习 / 音乐内容产品** | 阅读/学习类严控 `60–66ch` 舒展行宽与 `1.65` 中文行高；音乐播放器以专辑封面为绝对焦点，底部迷你播放条自然延伸背景材质并在点击时平滑展开为全屏播放页 | 内容本身是主角，界面退后为节奏清晰、边界连续的沉浸容器 |
+| **6. 动作 / 策略游戏 UI & HUD** | 中心战斗视野 100% 纯净；边缘 HUD 契合世界观材质，浮于 3D 画面上的血量与冷却自带暗色柔边保护层；手柄 D-Pad 焦点框极清晰，插拔键鼠实时切换按键图标 | 兼顾高压瞬间读数、动态亮暗背景可读性与世界观沉浸感 |
 
+---
+
+## 二、可执行工程与微交互高工艺配方
+
+### 1. 同心圆角与亮/暗双模式光影卡片
 ```css
 .card {
   --card-padding: 12px;
@@ -20,32 +32,55 @@
     0 1px 2px rgba(15, 23, 42, 0.05),
     0 6px 16px -4px rgba(15, 23, 42, 0.06);
 }
-
 [data-theme="dark"] .card {
-  background: var(--bg-surface); /* #14171D 位于 #0D0F12 画布之上 */
+  background: var(--bg-surface);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 0 0 1px rgba(255, 255, 255, 0.08);
 }
+```
 
-.card-media {
-  border-radius: var(--inner-radius); /* 6px 严丝合缝 */
-  aspect-ratio: 16 / 10;              /* 预声明比例防止 CLS 跳动 */
-  object-fit: cover;
+### 2. 锚点空间因果动效：日期选择 / 下拉菜单（非凭空闪现）
+**要点**：以触发按钮边缘为 `transform-origin` 快速灵动展开（`180ms`），收起更快且零回弹（`130ms`），触发按钮保持 `data-open` 关联高亮，随时可打断且支持 `prefers-reduced-motion`。
+```css
+.date-trigger[data-open="true"] {
+  background: var(--bg-subtle);
+  border-color: var(--border-strong);
+}
+
+.date-popover {
+  transform-origin: top left; /* 动态翻转贴边时同步切换为 top right / bottom left */
+  opacity: 0;
+  transform: translateY(-4px) scale(0.96);
+  pointer-events: none;
+  transition:
+    transform 140ms cubic-bezier(0.4, 0, 1, 1),
+    opacity 120ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+.date-popover[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  transition:
+    transform 190ms cubic-bezier(0.2, 0.9, 0.25, 1),
+    opacity 140ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .date-popover, .date-popover[data-open="true"] {
+    transform: none;
+    transition: opacity 100ms linear;
+  }
 }
 ```
 
----
-
-## 2. 锁宽防跳动 + 原地 Loading 态生产按钮
-
-**要点**：点击瞬间响应按压缩放；切入 Loading 时原地保留文案宽度（CSS Grid 单格叠放），旁边按钮绝不抖动；仅桌面真鼠标设备启用 Hover，且实心按钮悬停加深本色不灰掉；仅键盘导航显示 `:focus-visible`。
-
+### 3. 锁宽防跳动 + 原地 Loading 按钮
 ```css
 .btn-primary {
   display: inline-grid;
   place-items: center;
-  min-height: 40px;                 /* 移动端可调至 44px */
+  min-height: 40px;
   padding: 0 16px;
   border: 0;
   border-radius: 8px;
@@ -53,81 +88,35 @@
   color: var(--text-on-accent);
   font-weight: 500;
   transition: background-color 150ms cubic-bezier(0.2, 0, 0, 1),
-              transform 100ms cubic-bezier(0.2, 0, 0, 1);
+              transform 90ms cubic-bezier(0.2, 0, 0, 1);
 }
-
-.btn-primary > * { grid-area: 1 / 1; } /* 文案与 Spinner 共享一格，切态零宽跳 */
-
+.btn-primary > * { grid-area: 1 / 1; } /* 切 Loading 宽度绝对不抖动 */
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover:not(:disabled) { background: var(--accent-primary-hover); }
 }
-
 .btn-primary:active:not(:disabled) { transform: scale(0.98); }
-
-.btn-primary:focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
-}
-
-.btn-primary[data-loading="true"] .btn-label { visibility: hidden; }
-
-@media (prefers-reduced-motion: reduce) {
-  .btn-primary { transition: none; }
-  .btn-primary:active:not(:disabled) { transform: none; }
-}
+.btn-primary:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
 ```
 
----
-
-## 3. 乐观删除 + 5 秒可撤销闭环（优于烦人的“确定要删除吗？”）
-
-**要点**：对可逆删除/归档立即从列表中平滑折叠移出，底部弹出带 `aria-live="polite"` 的 Toast 提供 **“撤销”** 动作；超时后才真正提交远端/永久销毁，中途点击撤销则原位恢复。
-
-```text
-用户点击“归档”
-  ├─ 0ms   ：列表项先淡出内容（80ms）再平滑闭合高度（200ms，不硬切文字）
-  ├─ 50ms  ：底部安全区上方浮现 Toast：“已归档《Q4 预算表》 [撤销]”
-  ├─ 5s 内 ：用户点“撤销” → 取消定时器，条目在原索引位置平滑重新展开
-  └─ 5s 后 ：执行真正持久化删除；若接口失败 → 自动回滚条目并提示失败重试
-```
-
----
-
-## 4. 列表行替代多余卡片网格（高信噪比信息密度）
-
-**要点**：设置页、账单明细、订单列表用统一网格轨道（固定列宽 + `flex-shrink: 0` 图标列 + 弹性主内容列 `min-width: 0` + 右对齐 `tabular-nums` 金额列）+ 极细内嵌分割线。
-
+### 4. 滚动触发的顶栏边界衔接 + 底部安全留白
 ```css
-.bill-row {
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-  min-height: 56px;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border-subtle);
+.page-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg-canvas);
+  border-bottom: 1px solid transparent;
+  transition: border-color 160ms ease, background-color 160ms ease;
 }
-
-.bill-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--text-primary);
+.page-header[data-scrolled="true"] {
+  border-bottom-color: var(--border-subtle); /* 静止无缝，滚动后平滑浮现清晰 1px 细线 */
 }
-
-.bill-amount {
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;              /* 数值与货币单位绝不折行 */
-  font-weight: 600;
+.page-scroll-content {
+  padding-bottom: calc(var(--bottom-nav-height, 56px) + env(safe-area-inset-bottom) + 16px);
 }
 ```
 
----
-
-## 5. 不硬切文字的平滑展开折叠（Grid Row Transition）
-
-**要点**：绝不对 `height: auto` 做生硬裁剪；用 `grid-template-rows: 0fr → 1fr` 驱动容器空间，内部内容淡入略滞后、淡出略提前，边缘永远不劈文字。
-
+### 5. 不硬切文字的平滑展开折叠（Grid Row Transition）
 ```css
 .disclosure-panel {
   display: grid;
@@ -135,35 +124,44 @@
   transition: grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .disclosure-panel[data-open="true"] { grid-template-rows: 1fr; }
-
 .disclosure-inner {
   overflow: hidden;
   opacity: 0;
-  transition: opacity 140ms ease;
+  transition: opacity 130ms ease;
 }
 .disclosure-panel[data-open="true"] .disclosure-inner {
   opacity: 1;
-  transition-delay: 60ms;
+  transition-delay: 50ms;
 }
 ```
 
----
-
-## 6. 微信小程序自定义导航栏精准胶囊避让（计算范式）
-
-```js
-// 动态计算导航栏尺寸，严禁硬编码 88px / 44px
-const { statusBarHeight, screenWidth } = wx.getWindowInfo();
-const capsule = wx.getMenuButtonBoundingClientRect();
-const navGap = capsule.top - statusBarHeight;
-const navBarHeight = capsule.height + navGap * 2;
-const rightSafeInset = screenWidth - capsule.left + 8; // 右侧控件必须避开此宽度
-const canGoBack = getCurrentPages().length > 1;        // 深层直达时切回首页图标
+### 6. 数据与列表精排（替代多余卡片网格）
+```css
+.metric-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.metric-value {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-weight: 600;
+}
 ```
 
----
-
-## 7. 原生移动端高质感速配参考
-
-- **iOS 26 (SwiftUI)**：列表内容区保持实色高对比 `.listStyle(.insetGrouped)`；仅悬浮操作栏/底栏应用系统默认材质或 `.glassEffect()`；按钮热区用 `.frame(minWidth: 44, minHeight: 44)`；金额数字加 `.monospacedDigit()`；支持 `.accessibilityReduceMotion`。
-- **Android (Jetpack Compose)**：入口调用 `enableEdgeToEdge()`，用 `Modifier.windowInsetsPadding(WindowInsets.safeDrawing)` 避让系统栏；层次用 `MaterialTheme.colorScheme.surfaceContainerLow / High`；列表强制 `LazyColumn` + 稳定 `key`；动效优先 `MaterialTheme.motionScheme.defaultSpatialSpec()` / `fastEffectsSpec()`。
+### 7. 干净商业级界面文案范例
+- **页头**：`收藏`（直接展示内容与 `新建收藏夹`，零冗余副标题）
+- **按钮**：`添加物品` / `保存修改` / `导出 CSV` / `选择日期` / `归档项目`
+- **诚实报错**：`网络连接中断，修改尚未同步。重新连接后可再次同步。` + `[重试同步]`
+- **乐观撤销**：`已归档《Q4 预算表》` + `[撤销]`（5 秒后落盘持久化）
+- **微信小程序胶囊避让**：
+  ```js
+  const { statusBarHeight, screenWidth } = wx.getWindowInfo();
+  const capsule = wx.getMenuButtonBoundingClientRect();
+  const navBarHeight = capsule.height + (capsule.top - statusBarHeight) * 2;
+  const rightSafeInset = screenWidth - capsule.left + 8;
+  ```

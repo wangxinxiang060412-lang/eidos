@@ -1,38 +1,35 @@
-# Workflow: Final Runtime & Visual Verification Loop
+# Workflow: Final Runtime Verification, Content Audit & Rollback Gate
 
 适用场景：所有设计与开发任务交付前的强制闭环验收。
-**核心铁律：没有实际运行与画面取证，就不是验收通过；发现 P0 一票否决。**
+**核心铁律：绝不靠读代码宣称完工；存在 P0 一票否决；无收益或负收益改动必须主动回退。**
 
 ---
 
 ## Step 1：自动化工程门禁
 1. 运行项目类型检查（`typecheck`）、静态检查（`lint`）、单元测试与生产构建（`build`）。
-2. 确认浏览器 Console / 原生 Logcat / Xcode Console 无新增运行时错误、Hydration 不匹配或未捕获 Promise 异常。
+2. 确认运行控制台（Browser Console / Xcode / Logcat）无新增 Error、Hydration 错位或未捕获异常。
 
-## Step 2：真实环境启动与多视口取证（加载 `visual-verification.md`）
-启动真实应用，使用浏览器 / Playwright / iOS Simulator / Android Emulator / 微信开发者工具 / 游戏引擎采集并**亲自查看**以下画面：
-1. **桌面/主视口静态与核心状态**（如 `1440×900`）
-2. **窄屏/移动端视口**（如 `390×844` 及极端 `320px` 抽检，确认零横向滚动与热区可达）
-3. **深色模式**（若支持：检查表面阶梯、对比度与顶边微光，不靠黑坨阴影）
-4. **关键交互态与异常态**（空数据、加载态、校验错误、弹层打开、键盘 `:focus-visible` 焦点环）
-5. **动效与转场过程**（通过录屏或 50–80ms 间隔抽帧检查：无边缘切字、无落位跳变、无锚点漂移、可中途打断、`prefers-reduced-motion` 正常退化）
+## Step 2：14 步真实运行与多维取证（加载 `visual-verification.md`）
+启动真实应用，采集并**亲自核对**：
+1. **全局与局部双尺度截图**：桌面宽屏（`1440×900`）+ 移动窄屏（`390×844` / `320px`）+ 深色模式（若支持），同时放大检查基线对齐、图标重心、同心圆角、边界衔接与安全区。
+2. **真实点击与端到端闭环**：实点主入口、跳转返回保态、表单校验、持久化刷新、异常/空态/撤销恢复。
+3. **动效与弹层过程核查**：通过录屏或 `50–80ms` 抽帧验证日期选择/菜单/弹窗/Sheet/折叠的锚点起止、无切字、无落位跳变、中途打断与 `prefers-reduced-motion`。
 
-## Step 3：独立新鲜视角六清单交叉核验
-假设你是从未看过代码、最挑剔的产品评审，逐项核查（按任务按需读取对应清单）：
-- [functional-checklist.md](../checklists/functional-checklist.md)（每个按钮真能用？数据真持久？无假反馈？）
-- [ux-checklist.md](../checklists/ux-checklist.md)（首眼清晰？操作直觉？返回保态？）
-- [ui-checklist.md](../checklists/ui-checklist.md)（无 AI 模板味？留白均衡？同心圆角？无近切边？）
-- [motion-checklist.md](../checklists/motion-checklist.md)（有因果？不拖慢？可打断？）
-- [accessibility-checklist.md](../checklists/accessibility-checklist.md)（WCAG 2.2 对比度、焦点、键盘、热区？）
-- [release-checklist.md](../checklists/release-checklist.md)（零 P0？性能达标？诚实披露未验证项？）
+## Step 3：独立 Content Audit（加载 `ux-writing.md`）
+逐项扫描全部用户可见文案（含二级页、弹窗、报错、空态与 `aria-label`）：
+- 无 14 类模板化 AI 鸡汤文案、无冗余标题副标题
+- 按钮动词准确可预测、高危操作写明精确后果
+- 报错与反馈 100% 匹配真实程序状态（绝不虚构已保存/已同步）
+- 跨页面术语一致、无文案撑爆/异常折行、未擅改品牌 Slogan 与法务文本
 
-## Step 4：修复 → 复测闭环
-1. 按 `P0 → P1 → P2` 排序修复发现的所有实质问题。
-2. **每一次视觉或交互修改后，必须重新截屏/跑通受影响流程验证**，禁止“修完最后一行代码直接盲目宣布通过”。
+## Step 4：六清单交叉审查 + 20 项精修复核
+以独立苛刻评审视角过检：
+- [functional-checklist.md](../checklists/functional-checklist.md) · [ux-checklist.md](../checklists/ux-checklist.md) · [ui-checklist.md](../checklists/ui-checklist.md) · [motion-checklist.md](../checklists/motion-checklist.md) · [accessibility-checklist.md](../checklists/accessibility-checklist.md) · [release-checklist.md](../checklists/release-checklist.md)
+- 同步对照 [visual-refinement.md](../references/visual-refinement.md) 捕捉可顺手解决的高影响力微调项。
 
-## Step 5：输出诚实交付报告
-按 [delivery-report.md](../templates/delivery-report.md) 向用户汇报：
-- 交付功能与设计要点
-- 已实际运行并验证的设备/视口/状态及证据
-- **`Not Checked` 清单**：如实写明因环境或外部依赖限制尚未实测的项及复测指南
-- 明确的验收结论（通过 / 附条件通过 / 存在阻塞项未通过）
+## Step 5：前后对比、修复复测与负收益回退
+1. 将修改后（After）与基线（Before）真实画面比对；**若某项改动无实际收益或体验下降，果断撤销回退**。
+2. 按 `P0 → P1 → P2` 修复发现的问题；**每次视觉或交互改动后必须重新运行取证验证**。
+
+## Step 6：输出诚实交付报告
+按 [delivery-report.md](../templates/delivery-report.md) 汇总：交付概要、配色权限执行情况、已验证视口/动效/Content Audit 证据、前后对比与回退记录，以及 **`Not Checked`（未测项与复测方法）**。

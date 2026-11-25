@@ -1,35 +1,29 @@
-# Workflow: Existing Project UI/UX Audit
+# Workflow: Existing Project Audit (Stage 5–6 · Read & Run First)
 
-适用场景：对已有代码库或已上线产品做系统性 UI/UX 审查、体验评分与优先级规划。
-**核心铁律：未彻底理解项目前严禁动笔改版；未实际运行/看图前严禁给高分；保留已合理的设计。**
+适用场景：对前端半成品（Stage 5）或完整但体验不佳的产品（Stage 6）做系统性 UI/UX、色彩、文案与功能审查。
+**核心铁律：未彻底理解项目前严禁动笔改版；未运行/看图前严禁给高分；保留已合理的设计；配色问题只提案不擅改。**
 
 ---
 
-## Step 1：项目理解与架构盘点（只读阶段）
-1. 阅读 `README`、产品需求文档、`package.json` / 工程配置、目录结构、路由配置与主题/样式体系。
-2. 梳理技术栈、状态管理、数据接口与核心业务逻辑，标记严禁破坏的关键契约（API、DB Schema、持久化 Key）。
-3. 列出所有页面、主导航路径、弹窗/抽屉与高频用户操作流程。
+## Step 1：只读理解与架构盘点
+1. 判定当前阶段，阅读文档、目录结构、路由表、状态管理、数据接口、主题 Token、i18n 本地化文件与组件库。
+2. 明确严禁破坏的资产清单：数据库 Schema、API 契约、持久化 Key、核心业务逻辑、品牌 Slogan 与法务文本。
+3. 列出所有页面、弹窗、导航路径、高频业务流与全部固定文案落点。
 
-## Step 2：真实运行与全流程实测
-1. 按项目启动方式在本地/模拟器/浏览器中运行项目（若因缺环境变量/外部服务无法启动，如实记录受阻原因）。
-2. 以真实用户视角完整操作一遍主任务流程，同时主动触发边界情况：空数据、错误输入、断网/失败、快速连点、返回上一页、刷新页面、切换深色模式、调整窗口到 `390px` 窄屏与 `1440px` 宽屏。
-3. 截取关键页面截图及动效/转场观察记录。
+## Step 2：真实运行与基线取证（Before Baseline）
+1. 尽可能启动项目，以真实用户视角走完核心主流程与异常边界（空数据、校验失败、断网/超时、连点、返回、刷新、暗黑模式、`390px` 窄屏与 `1440px` 宽屏）。
+2. 保存**修改前基线截图（Before）**与运行 Console 记录，供后续前后效果对比。
 
-## Step 3：逐页逐控件系统审查
-按需对照 [audit-framework.md](../references/audit-framework.md)、[anti-ai-ui.md](../references/anti-ai-ui.md)、[interaction-states.md](../references/interaction-states.md) 与目标平台规范审查：
-- **哪些设计已经合理（Keep List）**：明确列出，防止后续优化误伤好设计。
-- **核心功能与交互闭环**：是否存在假按钮、死链、无响应、丢状态或数据风险（P0）？
-- **用户直觉与 IA**：首眼焦点、按钮层级、热区、导航一致性、返回保态。
-- **视觉工艺与 AI 味排查**：对比度、对齐、同心圆角、嵌套卡片、冗余装饰、文案自然度。
-- **动效、多端适配、无障碍与性能**：转场因果、键盘焦点、安全区、帧率与控制台报错。
+## Step 3：13 项系统体检 + 专项深度审计
+先列出 **已合理且必须保留的设计资产（Keep List）**，再逐项审计：
+1. **色彩系统 11 维审查**（[color-review.md](../references/color-review.md)）：判断应保留现有配色，还是起草 [color-proposal.md](../templates/color-proposal.md) 供用户确认。
+2. **功能表达与交互闭环**：检查 6 问即时清晰度、空壳按钮、假反馈、导航死胡同、返回保态与 20 种适用异常态。
+3. **全栈 Anti-AI Design & 独立审美侦察**（[anti-ai-ui.md](../references/anti-ai-ui.md) + [aesthetic-reasoning.md](../references/aesthetic-reasoning.md)）：排查胶囊汤、嵌套卡片、重复 KPI 卡、装饰图标盒、统一淡入上浮与 10 类隐性审美失衡。
+4. **图标、边界、数据与 20 项精修雷达**：核查 [iconography.md](../references/iconography.md)、[navigation-and-boundaries.md](../references/navigation-and-boundaries.md)、[data-visualization.md](../references/data-visualization.md) 与 [visual-refinement.md](../references/visual-refinement.md)。
+5. **空间因果动效与 Content Audit**：核查弹窗/菜单是否闪现或缺少锚点，扫描全项目 19 类可见文案清除 AI 模板话术与术语分裂（[ux-writing.md](../references/ux-writing.md)）。
+6. **无障碍、多端适配与性能**：WCAG 2.2 AA、焦点、安全区与帧率/稳定性。
 
-## Step 4：加权打分与 P0–P3 行动方案
-1. 使用 [audit-report.md](../templates/audit-report.md) 模板输出正式审查报告：
-   - 9 维度客观打分（附依据，未核查维度如实标明 `Unverified`）。
-   - 列出 **保留项（Do Not Break）**。
-   - 按 `P0 → P1 → P2 → P3` 排序记录每个问题的 9 个必填字段。
-2. 给出分阶段最小改动优化路线图：
-   - **Phase 1（止血）**：清零全部 P0 与主路径 P1。
-   - **Phase 2（提质）**：修复核心视觉层级、去 AI 味、统一 Token 与关键动效。
-   - **Phase 3（打磨）**：按需处理 P3 细节。
-3. 若用户本次仅要求审查，**在此交付报告并等待确认范围后再动代码**；若用户要求审查并直接修复，携带收敛后的计划转入 [redesign.md](./redesign.md)。
+## Step 4：输出加权审查报告与分阶段路线图
+1. 按 [audit-report.md](../templates/audit-report.md) 输出 9 维客观评分、保留项清单与 `P0 → P3` 完整 9 字段问题表。
+2. 若发现需改整体配色，附上 [color-proposal.md](../templates/color-proposal.md) 请用户确认。
+3. 若仅要求审查，在此交付等待确认；若需直接实施优化，转入 [redesign.md](./redesign.md)（未获配色确认前严禁擅改整体色板）。
